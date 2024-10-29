@@ -1,7 +1,8 @@
-import numpy as np
-from scipy.optimize import minimize
-from scipy.io import loadmat
 from math import sqrt
+
+import numpy as np
+from scipy.io import loadmat
+from scipy.optimize import minimize
 
 
 def initializeWeights(n_in, n_out):
@@ -182,19 +183,49 @@ def nnObjFunction(params, *args):
     w2 = params[(n_hidden * (n_input + 1)):].reshape((n_class, (n_hidden + 1)))
     obj_val = 0
 
-    # Your code here
-    #
-    #
-    #
-    #
-    #
+    train_label_onehot = np.zeros((len(training_label), n_class))
+    train_label_onehot[np.arange(len(training_label)), training_label.astype(int)] = 1
 
+    # 1. Feedforward Propagation
+    training_data = np.column_stack((training_data, np.ones(training_data.shape[0]))) 
+
+    # hidden layer output
+    a = np.dot(training_data, w1.T) 
+    z = sigmoid(a)
+    z = np.column_stack((z, np.ones(z.shape[0])))
+
+    # output layer output
+    b = np.dot(z, w2.T)
+    o = sigmoid(b)
+
+    #2. Error Function Calculation (Negative Log-Likelihood with Regularization)
+    error = -np.sum(train_label_onehot * np.log(o) + (1 - train_label_onehot) * np.log(1 - o)) / training_data.shape[0]
+
+    # regularization term
+    regularization = (lambdaval / (2 * training_data.shape[0])) * (np.sum(w1[:, :-1]**2) + np.sum(w2[:, :-1]**2))
+    obj_val = error + regularization
+
+    # 3. Backpropagation to Calculate Gradients
+    # output layer delta
+    delta_l = o - train_label_onehot
+
+    # hidden layer delta
+    delta_j = np.dot(delta_l, w2[:, :-1]) * (z[:, :-1] * (1 - z[:, :-1]))
+
+    # Calculate gradients for w1 and w2
+    grad_w1 = np.dot(delta_j.T, training_data) / training_data.shape[0]
+    grad_w2 = np.dot(delta_l.T, z) / training_data.shape[0]
+
+    # Add regularization term to gradients
+    grad_w1 += (lambdaval / training_data.shape[0]) * np.column_stack((w1[:, :-1], np.zeros(w1.shape[0])))
+    grad_w2 += (lambdaval / training_data.shape[0]) * np.column_stack((w2[:, :-1], np.zeros(w2.shape[0])))
 
 
     # Make sure you reshape the gradient matrices to a 1D array. for instance if your gradient matrices are grad_w1 and grad_w2
     # you would use code similar to the one below to create a flat array
-    # obj_grad = np.concatenate((grad_w1.flatten(), grad_w2.flatten()),0)
-    obj_grad = np.array([])
+    #obj_grad = np.array([])
+    obj_grad = np.concatenate((grad_w1.flatten(), grad_w2.flatten()),0)
+    # obj_grad = np.array([])
 
     return (obj_val, obj_grad)
 
