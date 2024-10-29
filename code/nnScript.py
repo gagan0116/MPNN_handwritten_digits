@@ -243,8 +243,7 @@ def nnPredict(w1, w2, data):
     %     layer to unit j in hidden layer.
     % data: matrix of data. Each row of this matrix represents the feature 
     %       vector of a particular image
-       
-    % Output: 
+    % Output:
     % label: a column vector of predicted labels"""
 
     labels = np.array([])
