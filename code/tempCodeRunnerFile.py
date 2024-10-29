@@ -1,0 +1,1 @@
+train_data = train_data[train_data[:, 0] > 0]
