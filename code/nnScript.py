@@ -187,7 +187,7 @@ def nnObjFunction(params, *args):
     train_label_onehot[np.arange(len(training_label)), training_label.astype(int)] = 1
 
     # 1. Feedforward Propagation
-    training_data = np.column_stack((training_data, np.ones(training_data.shape[0]))) 
+    training_data = np.column_stack((training_data, np.ones(training_data.shape[0])))
 
     # hidden layer output
     a = np.dot(training_data, w1.T) 
