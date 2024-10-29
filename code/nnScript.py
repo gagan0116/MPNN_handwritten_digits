@@ -248,7 +248,20 @@ def nnPredict(w1, w2, data):
     % label: a column vector of predicted labels"""
 
     labels = np.array([])
-    # Your code here
+    #bias term
+    data = np.column_stack((data, np.ones(data.shape[0])))
+
+    # hidden layer output
+    a = np.dot(data, w1.T)
+    z = sigmoid(a)
+    z = np.column_stack((z, np.ones(z.shape[0])))  # Add bias term to hidden layer output
+
+    # output layer output
+    b = np.dot(z, w2.T)
+    o = sigmoid(b)
+
+    # Predict labels
+    labels = np.argmax(o, axis=1)
 
     return labels
 
