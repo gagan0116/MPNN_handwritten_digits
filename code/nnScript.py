@@ -25,7 +25,7 @@ def sigmoid(z):
     """# Notice that z can be a scalar, a vector or a matrix
     # return the sigmoid of input z"""
 
-    return  # your code here
+    return 1/(1 + np.exp(-z))
 
 
 def preprocess():
@@ -124,9 +124,15 @@ def preprocess():
     test_data = test_data / 255.0
     test_label = test_label_preprocess[test_perm]
 
-    # Feature selection
-    # Your code here.
+    # Feature selection - 
+    var = np.var(train_data, axis=0)
+    idx = var > 0
 
+    print("Features Selected")
+
+    train_data = train_data[:, idx]
+    validation_data = validation_data[:, idx]
+    test_data = test_data[:, idx]
     print('preprocess done')
 
     return train_data, train_label, validation_data, validation_label, test_data, test_label

@@ -417,10 +417,3 @@ print_test_accuracy(show_example_errors=False)
 optimize(num_iterations=9000)
 print_test_accuracy(show_example_errors=False)
 session.close()
-
-
-
-
-
-
-
