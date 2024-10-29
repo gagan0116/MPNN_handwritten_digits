@@ -229,7 +229,6 @@ def nnObjFunction(params, *args):
 
     return (obj_val, obj_grad)
 
-
 def nnPredict(w1, w2, data):
     """% nnPredict predicts the label of data given the parameter w1, w2 of Neural
     % Network.
@@ -297,33 +296,33 @@ args = (n_input, n_hidden, n_class, train_data, train_label, lambdaval)
 
 opts = {'maxiter': 50}  # Preferred value.
 
-#nn_params = minimize(nnObjFunction, initialWeights, jac=True, args=args, method='CG', options=opts)
+nn_params = minimize(nnObjFunction, initialWeights, jac=True, args=args, method='CG', options=opts)
 
 # In Case you want to use fmin_cg, you may have to split the nnObjectFunction to two functions nnObjFunctionVal
 # and nnObjGradient. Check documentation for this function before you proceed.
-# nn_params, cost = fmin_cg(nnObjFunctionVal, initialWeights, nnObjGradient,args = args, maxiter = 50)
+#nn_params, cost = fmin_cg(nnObjFunctionVal, initialWeights, nnObjGradient,args = args, maxiter = 50)
 
 
 # Reshape nnParams from 1D vector into w1 and w2 matrices
-#w1 = nn_params.x[0:n_hidden * (n_input + 1)].reshape((n_hidden, (n_input + 1)))
-#w2 = nn_params.x[(n_hidden * (n_input + 1)):].reshape((n_class, (n_hidden + 1)))
+w1 = nn_params.x[0:n_hidden * (n_input + 1)].reshape((n_hidden, (n_input + 1)))
+w2 = nn_params.x[(n_hidden * (n_input + 1)):].reshape((n_class, (n_hidden + 1)))
 
 # Test the computed parameters
 
-#predicted_label = nnPredict(w1, w2, train_data)
+predicted_label = nnPredict(w1, w2, train_data)
 
 # find the accuracy on Training Dataset
 
-#print('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label).astype(float))) + '%')
+print('\n Training set Accuracy:' + str(100 * np.mean((predicted_label == train_label).astype(float))) + '%')
 
-#predicted_label = nnPredict(w1, w2, validation_data)
-
-# find the accuracy on Validation Dataset
-
-#print('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label).astype(float))) + '%')
-
-#predicted_label = nnPredict(w1, w2, test_data)
+predicted_label = nnPredict(w1, w2, validation_data)
 
 # find the accuracy on Validation Dataset
 
-#print('\n Test set Accuracy:' + str(100 * np.mean((predicted_label == test_label).astype(float))) + '%')
+print('\n Validation set Accuracy:' + str(100 * np.mean((predicted_label == validation_label).astype(float))) + '%')
+
+predicted_label = nnPredict(w1, w2, test_data)
+
+# find the accuracy on Validation Dataset
+
+print('\n Test set Accuracy:' + str(100 * np.mean((predicted_label == test_label).astype(float))) + '%')
