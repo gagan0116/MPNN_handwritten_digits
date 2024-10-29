@@ -220,7 +220,6 @@ def nnObjFunction(params, *args):
     grad_w1 += (lambdaval / training_data.shape[0]) * np.column_stack((w1[:, :-1], np.zeros(w1.shape[0])))
     grad_w2 += (lambdaval / training_data.shape[0]) * np.column_stack((w2[:, :-1], np.zeros(w2.shape[0])))
 
-
     # Make sure you reshape the gradient matrices to a 1D array. for instance if your gradient matrices are grad_w1 and grad_w2
     # you would use code similar to the one below to create a flat array
     #obj_grad = np.array([])

@@ -21,10 +21,9 @@ def initializeWeights(n_in,n_out):
                             
     # Output:
     # W: matrix of random initial weights with size (n_out x (n_in + 1))"""
-    epsilon = sqrt(6) / sqrt(n_in + n_out + 1);
-    W = (np.random.rand(n_out, n_in + 1)*2* epsilon) - epsilon;
+    epsilon = sqrt(6) / sqrt(n_in + n_out + 1)
+    W = (np.random.rand(n_out, n_in + 1)*2* epsilon) - epsilon
     return W
-
 
 
 # Replace this with your sigmoid implementation
@@ -184,12 +183,12 @@ n_hidden = 256
 n_class = 2
 
 # initialize the weights into some random matrices
-initial_w1 = initializeWeights(n_input, n_hidden);
-initial_w2 = initializeWeights(n_hidden, n_class);
+initial_w1 = initializeWeights(n_input, n_hidden)
+initial_w2 = initializeWeights(n_hidden, n_class)
 # unroll 2 weight matrices into single column vector
 initialWeights = np.concatenate((initial_w1.flatten(), initial_w2.flatten()),0)
 # set the regularization hyper-parameter
-lambdaval = 10;
+lambdaval = 10
 args = (n_input, n_hidden, n_class, train_data, train_label, lambdaval)
 
 #Train Neural Network using fmin_cg or minimize from scipy,optimize module. Check documentation for a working example
