@@ -17,7 +17,7 @@ filter_size2 = 5          # Convolution filters are 5 x 5 pixels.
 num_filters2 = 36         # There are 36 of these filters.
 
 # Fully-connected layer.
-fc_size = 128        
+fc_size = 128
 
 from tensorflow.examples.tutorials.mnist import input_data
 data = input_data.read_data_sets('data/MNIST/', one_hot=True)
